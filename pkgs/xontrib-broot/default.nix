@@ -15,15 +15,17 @@ in
       sha256 = "sha256-9GqsTVCMvrWpTopHtEdicTyYRQzP1NVtQHZsfBT+fUg=";
     };
 
-    doCheck = false;
+    doCheck = true;
     format = "pyproject";
     build-system = with pkgs.python3Packages; [
       setuptools
       pdm-pep517
       poetry-core
-      pkgs.xonsh
     ];
 
+    postPatch = ''
+      sed -ie "/xonsh.*=/d" pyproject.toml
+    '';
     meta = {
       homepage = "https://github.com/jnoortheen/xontrib-broot";
       license = pkgs.lib.licenses.mit;
